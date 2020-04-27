@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis的主配置文件-->
+<configuration>
+    <!-- 配置环境-->
+    <environments default="oracle">
+        <environment id="oracle">
+            <!--     配置失误类型       -->
+            <transactionManager type="jdbc"></transactionManager>
+            <!--  配置数据库（连接池）          -->
+            <dataSource type="POOLED">
+                <!--配置连接数据库的4个基本信息-->
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@192.168.14.67:1521/cworcl"/>
+                <property name="username" value="scott"/>
+                <property name="password" value="tiger"/>
+                <!--poolMaximumActiveConnections 最大活动连接数-->
+                <property name="poolMaximumActiveConnections" value="50"/>
+                <!--poolMaximumIdleConnections 最大空闲连接数-->
+                <property name="poolMaximumIdleConnections" value="10" />
+                <!--poolMaximumCheckoutTime 最大可回收时间，即当达到最大活动链接数时，此时如果有程序获取链接，则
+                检查最先使用的链接，看其是否超出了该时间，如果超出了该时间，则可以回收该连接-->
+                <property name="poolMaximumCheckoutTime" value="15" />
+                <!--poolTimeToWait 没有连接时，重尝试获取连接以及打印日志的时间间隔-->
+                <property name="poolTimeToWait" value="10" />
+                <!--poolPingQuery 检查连接正确的语句，默认为“no ping query set"即没有，使用会导致抛出异常-->
+                <property name="poolPingQuery" value="select 1 from dual" />
+                <!-- poolPingEnabled 是否开启ping检测默认为false-->
+                <property name="poolPingEnabled" value="true" />
+                <!--poolPingConnectionsNotUsedFor 设置ping检测时间间隔，通常用于检测超时连接，默认为0
+                即当开启检测后每次从连接池获取连接以及放回连接池都需要检测）-->
+                <property name="poolPingConnectionsNotUsedFor" value="0" />
+            </dataSource>
+        </environment>
+    </environments>
+    <!--指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件-->
+    <mappers>
+        <mapper resource="com/shizu/dao/CompanyDao.xml"/>
+    </mappers>
+</configuration>
